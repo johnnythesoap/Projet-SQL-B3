@@ -143,3 +143,26 @@ SELECT
     SUM(CASE WHEN domestic = 'true' THEN 1 ELSE 0 END) AS domestic_true_count,
     SUM(CASE WHEN catsize = 'true' THEN 1 ELSE 0 END) AS catsize_true_count
 FROM zoo;
+
+
+# le nombre d'especes dans chaque type de class (mamiferes, etc...)
+
+SELECT 
+    c.class_type, 
+    COUNT(z.animal_name) AS number_of_species
+FROM class c
+JOIN zoo z ON c.class_number = z.class_type
+GROUP BY c.class_type
+ORDER BY number_of_species DESC;
+
+# le nombre d'especes aquatiques par class
+
+SELECT 
+    c.class_type, 
+    COUNT(z.animal_name) AS aquatic_species_count
+FROM class c
+JOIN zoo z ON c.class_number = z.class_type
+WHERE z.aquatic = 'true'
+GROUP BY c.class_type
+ORDER BY aquatic_species_count DESC;
+
