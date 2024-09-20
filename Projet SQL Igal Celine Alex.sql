@@ -166,3 +166,15 @@ WHERE z.aquatic = 'true'
 GROUP BY c.class_type
 ORDER BY aquatic_species_count DESC;
 
+
+# tri des classes par ordre de nombre de predateurs dans chaque classe
+
+SELECT c.class_type, COUNT(z.animal_name) AS predator_count
+FROM class c
+JOIN zoo z ON c.class_number = z.class_type  
+WHERE z.predator = 'true'  
+GROUP BY c.class_type       
+HAVING predator_count > 0   
+ORDER BY predator_count DESC;  
+
+
