@@ -19,6 +19,7 @@ MODIFY COLUMN tail VARCHAR(5),
 MODIFY COLUMN domestic VARCHAR(5),
 MODIFY COLUMN catsize VARCHAR(5);
 
+
 # replace values 0 par flase et 1 par true
 
 UPDATE zoo
@@ -85,8 +86,6 @@ SET
               END;
 
 
-
-
 # AVG, STDEV, MIN, MAX de la valeur legs (pour faire des statistiques sur le nombre de jambes/pattes des animaux)
 
 SELECT 
@@ -96,6 +95,18 @@ SELECT
     AVG(legs) AS avg_legs,
     STDDEV(legs) AS stddev_legs
 FROM zoo;
+
+# nombre medien de legs, utilisant la formule pour trouver les median dans les datasets avec un nombre impair de lignes
+
+SELECT legs AS median_legs
+FROM (
+    SELECT legs,
+           @row_number := @row_number + 1 AS row_num
+    FROM zoo, (SELECT @row_number := 0) AS r
+    ORDER BY legs
+) AS ranked
+WHERE row_num = (SELECT FLOOR((COUNT(*) + 1) / 2) FROM zoo);
+
 
 #animaux avec le nombre de legs le plus bas (0)
 
@@ -108,3 +119,4 @@ WHERE legs = (SELECT MIN(legs) FROM zoo);
 SELECT *
 FROM zoo
 WHERE legs = (SELECT MAX(legs) FROM zoo);
+
