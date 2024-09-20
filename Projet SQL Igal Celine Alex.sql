@@ -120,3 +120,26 @@ SELECT *
 FROM zoo
 WHERE legs = (SELECT MAX(legs) FROM zoo);
 
+#nombre de true dans chaque colonne (sur 101 animaux) pour deduire le nombre d'animaux possedant ces caracteristiques ou non
+
+SELECT 
+    SUM(CASE WHEN hair = 'true' THEN 1 ELSE 0 END) AS hair_true_count,
+    SUM(CASE WHEN feathers = 'true' THEN 1 ELSE 0 END) AS feathers_true_count,
+    SUM(CASE WHEN eggs = 'true' THEN 1 ELSE 0 END) AS eggs_true_count,
+    SUM(CASE WHEN milk = 'true' THEN 1 ELSE 0 END) AS milk_true_count,
+    SUM(CASE WHEN airborne = 'true' THEN 1 ELSE 0 END) AS airborne_true_count,
+    SUM(CASE WHEN aquatic = 'true' THEN 1 ELSE 0 END) AS aquatic_true_count,
+    SUM(CASE WHEN predator = 'true' THEN 1 ELSE 0 END) AS predator_true_count,
+    SUM(CASE WHEN toothed = 'true' THEN 1 ELSE 0 END) AS toothed_true_count,
+    SUM(CASE WHEN backbone = 'true' THEN 1 ELSE 0 END) AS backbone_true_count,
+    SUM(CASE WHEN breathes = 'true' THEN 1 ELSE 0 END) AS breathes_true_count,
+    SUM(CASE WHEN venomous = 'true' THEN 1 ELSE 0 END) AS venomous_true_count,
+    SUM(CASE WHEN fins = 'true' THEN 1 ELSE 0 END) AS fins_true_count,
+    
+  #pour les jambes, il y en a de 0 a 8, donc 0 = false et > 0 = true
+    SUM(CASE WHEN legs > 0 THEN 1 ELSE 0 END) AS legs_true_count,
+    
+    SUM(CASE WHEN tail = 'true' THEN 1 ELSE 0 END) AS tail_true_count,
+    SUM(CASE WHEN domestic = 'true' THEN 1 ELSE 0 END) AS domestic_true_count,
+    SUM(CASE WHEN catsize = 'true' THEN 1 ELSE 0 END) AS catsize_true_count
+FROM zoo;
